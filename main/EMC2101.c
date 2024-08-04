@@ -27,12 +27,14 @@ bool EMC2101_init(bool invertPolarity)
     return true;
 }
 
-// takes a fan speed percent
-void EMC2101_set_fan_speed(float percent)
+// takes a fan speed (0.0 ... 1.0)
+void EMC2101_set_fan_speed(float eff_duty_cyc)
 {
     uint8_t speed;
+    uint8_t pwm_f;
+    ESP_ERROR_CHECK(i2c_master_register_read(EMC2101_I2CADDR_DEFAULT, EMC2101_PWM_FREQ, &pwm_f, 1));
 
-    speed = (uint8_t) (63.0 * percent);
+    speed = (uint8_t) (eff_duty_cyc * (float) pwm_f * 2.0);
     ESP_ERROR_CHECK(i2c_master_register_write_byte(EMC2101_I2CADDR_DEFAULT, EMC2101_REG_FAN_SETTING, speed));
 }
 
@@ -80,9 +82,9 @@ float EMC2101_get_external_temp(void)
     return result;
 }
 
-uint8_t EMC2101_get_internal_temp(void)
+int8_t EMC2101_get_internal_temp(void)
 {
     uint8_t temp;
     ESP_ERROR_CHECK(i2c_master_register_read(EMC2101_I2CADDR_DEFAULT, EMC2101_INTERNAL_TEMP, &temp, 1));
-    return temp;
+    return (int8_t)temp;
 }

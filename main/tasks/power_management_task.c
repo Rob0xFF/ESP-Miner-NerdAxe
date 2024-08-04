@@ -44,7 +44,7 @@ static double automatic_fan_speed(float chip_temp, GlobalState * GLOBAL_STATE)
 {
     double result = 0.0;
     double min_temp = 45.0;
-    double min_fan_speed = 35.0;
+    double min_fan_speed = 50.0;
 
     if (chip_temp < min_temp) {
         result = min_fan_speed;
