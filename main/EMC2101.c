@@ -51,7 +51,7 @@ uint16_t EMC2101_get_fan_speed(void)
     // ESP_LOGI(TAG, "Raw Fan Speed = %02X %02X", tach_msb, tach_lsb);
 
     reading = tach_lsb | (tach_msb << 8);
-    RPM = 5400000 / reading;
+    RPM = EMC2101_FAN_RPM_NUMERATOR / reading;
 
     // ESP_LOGI(TAG, "Fan Speed = %d RPM", RPM);
     if (RPM == 82) {
