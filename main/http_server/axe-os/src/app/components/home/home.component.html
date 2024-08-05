@@ -90,24 +90,24 @@
                 <p-chart [data]="chartData" [options]="chartOptions"></p-chart>
             </div>
         </div>
-        <div class="col-12 lg:col-12 xl:col-6">
+        <div class="col-12 xl:col-4">
             <div class="card">
                 <h5>Power</h5>
                 <div class="grid text-center">
-                    <div class="col-4">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="3" [max]="20" [readonly]="true" [(ngModel)]="info.power"
                             valueTemplate="{value}"></p-knob>
                         Power<br />[W]
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="4.5" [max]="5.5" [readonly]="true" [(ngModel)]="info.voltage"
                             valueTemplate="{value}"></p-knob>
                         Input Voltage<br />[V]
                         <span class="danger" *ngIf="info.voltage < 4.8">&nbsp; Danger: Low voltage</span>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="0.9" [max]="1.8" [readonly]="true" [(ngModel)]="info.coreVoltage"
                             valueTemplate="{value}"></p-knob>
                         Requested ASIC Voltage <br />[V]
@@ -117,11 +117,11 @@
             </div>
         </div>
 
-        <div class="col-12 lg:col-6 xl:col-3">
+        <div class="col-12 xl:col-4">
             <div class="card">
-                <h5>Heat</h5>
+                <h5>Thermal Management</h5>
                 <div class="grid text-center">
-                    <div class="col-6">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="20" [max]="75" [readonly]="true" [(ngModel)]="info.temp"
                             valueTemplate="{value}"></p-knob>
                         ASIC Temperature<br />[°C]
@@ -130,7 +130,7 @@
                             Danger:
                             High Temperature</span>
                     </div>
-                    <div class="col-6" *ngIf="info.vrTemp > 0">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6" *ngIf="info.vrTemp > 0">
                         <p-knob  [min]="20" [max]="145" [readonly]="true" [(ngModel)]="info.vrTemp"
                             valueTemplate="{value}"></p-knob>
                         Voltage Regulator Temperature<br />[°C]
@@ -139,12 +139,12 @@
                             Danger:
                             High Temperature</span>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="0" [max]="100" [readonly]="true" [(ngModel)]="info.fanspeed"
                             valueTemplate="{value}"></p-knob>
                         Fan<br />[%]
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 sm:col-4 md:col-4 lg:col-4 xl:col-6">
                         <p-knob [min]="0" [max]="5000" [readonly]="true" [(ngModel)]="info.fanrpm"
                             valueTemplate="{value}"></p-knob>
                         Fan<br />[RPM]
@@ -167,7 +167,7 @@
 
 
 
-        <div class="col-12 lg:col-6 xl:col-3">
+        <div class="col-12 xl:col-4">
             <div class="card">
                 <h5>Performance</h5>
                 <div class="grid text-center">
@@ -191,7 +191,7 @@
 
 
 
-        <div class="col-12 lg:col-6">
+        <div class="col-12">
             <div class="card">
                 <h5>Pool Information</h5>
                 <table *ngIf="info$ | async as info; else loading">
