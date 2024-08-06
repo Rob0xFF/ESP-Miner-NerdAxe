@@ -1,7 +1,7 @@
 <ng-container *ngIf="form != null">
     <form [formGroup]="form">
 
-      <div class="card mb-0">
+      <div class="card">
         <h5>WiFi</h5>
         <div class="field grid p-fluid">
           <label htmlFor="hostname" class="col-12 mb-2 md:col-2 md:mb-0">Hostname:</label>
@@ -22,8 +22,7 @@
           </div>
         </div>
       </div>
-      <br />
-      <div class="card mb-0">
+      <div class="card">
         <h5>Mining Pool</h5>
         <div class="field grid p-fluid">
           <label htmlFor="stratumURL" class="col-12 mb-2 md:col-2 md:mb-0">Stratum URL:</label>
@@ -54,8 +53,7 @@
             </div>
         </div>
       </div>
-      <br />
-      <div class="card mb-0">
+      <div class="card">
         <h5>ASIC</h5>
         <ng-container *ngIf="!devToolsOpen && ASICModel == eASICModel.BM1366">
 
@@ -128,8 +126,7 @@
 
         </ng-container>
       </div>
-      <br />
-      <div class="card mb-0">
+      <div class="card">
         <h5>Display</h5>
         <div class="col-12 md:col-4">
             <div class="field-checkbox">
@@ -147,8 +144,7 @@
             </div>
         </div>
       </div>
-      <br />
-      <div class="card mb-0">
+      <div class="card">
         <h5>Temperature Control</h5>
         <div class="col-12 md:col-4">
             <div class="field-checkbox">
@@ -203,10 +199,9 @@
             </div>
         </div>
       </div>
-      <br />
-        <div class="mt-2">
+        <div class="mt-3">
             <button pButton [disabled]="form.invalid" (click)="updateSystem()"
-                class="btn btn-primary mr-2">Save</button>
+                class="btn btn-primary mr-2">&nbsp;Save&nbsp;</button>
             <b style="line-height: 34px;">You must restart this device after saving for changes to take effect.</b>
         </div>
 
