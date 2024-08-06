@@ -128,7 +128,7 @@
       </div>
       <div class="card">
         <h5>Display</h5>
-        <div class="col-12 md:col-4">
+        <div class="col-12">
             <div class="field-checkbox">
                 <p-checkbox name="flipscreen" formControlName="flipscreen" inputId="flipscreen"
                     [binary]="true"></p-checkbox>
@@ -136,11 +136,11 @@
             </div>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="col-12">
             <div class="field-checkbox">
                 <p-checkbox name="autoscreenoff" formControlName="autoscreenoff" inputId="autoscreenoff"
                     [binary]="true"></p-checkbox>
-                <label for="autoscreenoff">Automatic screen shutdown</label>
+                <label for="autoscreenoff">Automatic Display Shutdown</label>
             </div>
         </div>
       </div>
@@ -150,7 +150,7 @@
             <div class="field-checkbox">
                 <p-checkbox name="invertfanpolarity" formControlName="invertfanpolarity" inputId="invertfanpolarity"
                     [binary]="true"></p-checkbox>
-                <label for="invertfanpolarity">Invert Fan Polarity</label>
+                <label for="invertfanpolarity">Invert Fan PWM Polarity</label>
             </div>
         </div>
 
@@ -163,7 +163,7 @@
         </div>
 
         <div *ngIf="form.controls['autofanspeed'].value == true">
-          <div class="col-12" *ngIf="form.controls['autofanspeed'].value == true">
+          <div class="col-12 pl-4" *ngIf="form.controls['autofanspeed'].value == true">
 
               <div class="field-checkbox">
                  <p-checkbox name="autofanSetpoint" formControlName="autofanSetpoint" inputId="autofanSetpoint"
@@ -175,7 +175,7 @@
         </div>
 
         <div *ngIf="form.controls['autofanspeed'].value == true && form.controls['autofanSetpoint'].value == true">
-          <div class="col-12" *ngIf="form.controls['autofanspeed'].value == true && form.controls['autofanSetpoint'].value == true">
+          <div class="col-12 pl-8" *ngIf="form.controls['autofanspeed'].value == true && form.controls['autofanSetpoint'].value == true">
 
               <div class="field grid p-fluid">
                 <label htmlFor="tempSetpoint" class="col-12 mb-2 md:col-2 md:mb-0">ASIC Temperature Setpoint [°C]:</label>
@@ -189,7 +189,7 @@
 
 
         <div *ngIf="form.controls['autofanspeed'].value != true">
-            <div class="col-12" *ngIf="form.controls['autofanspeed'].value != true">
+            <div class="col-12 pl-4" *ngIf="form.controls['autofanspeed'].value != true">
                 <label>Fan Speed {{form.controls['fanspeed'].value}}%
                     <b *ngIf="form.controls['fanspeed'].value < 33" style="color:red">Danger: Could Cause
                         Overheating</b> <b *ngIf="form.controls['fanspeed'].value == 100" style="color:	#F2A900">S19
