@@ -449,8 +449,25 @@ void display_updateShares(SystemModule * module){
 
 }
 void display_updateTime(SystemModule * module){
-    char strData[20];
 
+    time_t now;
+    struct tm timeinfo;
+    time(&now);
+    // Set timezone
+    setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
+    tzset();
+
+    localtime_r(&now, &timeinfo);
+    char strftime_buf[3];
+    strftime(strftime_buf, sizeof(strftime_buf), "%H", &timeinfo);
+    //ESP_LOGI(TAG, "The current date/time in Berlin is: %s", strftime_buf);
+    if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && DisplayIsOn) {
+        display_turn_off();
+    } else if (!DisplayIsOn) {
+        display_turn_on();
+    }
+
+    char strData[20];
     // Calculate the uptime in seconds                     
     //int64_t currentTimeTest = esp_timer_get_time() + (8 * 3600 * 1000000LL) + (1800 * 1000000LL);//(8 * 60 * 60 * 10000);
     double uptime_in_seconds = (esp_timer_get_time() - module->start_time) / 1000000;

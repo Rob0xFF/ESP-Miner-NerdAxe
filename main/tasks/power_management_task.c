@@ -49,7 +49,7 @@ static double automatic_fan_speed(float chip_temp, GlobalState * GLOBAL_STATE)
     double min_fan_speed = 33.0;
     double temp_setpoint = (double)nvs_config_get_u16(NVS_CONFIG_AUTO_TEMP_SETPOINT, 50);
     uint8_t control_setpoint = nvs_config_get_u16(NVS_CONFIG_AUTO_FAN_SETPOINT, 0);
-    double p = 0.5;
+    double p = 1.0;
     double d = 1.5;
 
     
