@@ -660,7 +660,7 @@ void SYSTEM_notify_new_ntime(GlobalState * GLOBAL_STATE, uint32_t ntime)
     SystemModule * module = &GLOBAL_STATE->SYSTEM_MODULE;
 
     // Hourly clock sync
-    if (module->lastClockSync + (60 * 60) > ntime) {
+    if (module->lastClockSync + (60 * 60) < ntime) {
         return;
     }
     ESP_LOGI(TAG, "Syncing clock");
