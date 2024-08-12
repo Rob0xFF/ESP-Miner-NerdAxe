@@ -463,7 +463,7 @@ void display_updateTime(SystemModule * module){
     //ESP_LOGI(TAG, "The current date/time in Berlin is: %s", strftime_buf);
     if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && DisplayIsOn) {
         display_turn_off();
-    } else if (!DisplayIsOn) {
+    } else if ((atoi(strftime_buf) <= 21 && atoi(strftime_buf) >= 16) && !DisplayIsOn) {
         display_turn_on();
     }
 
