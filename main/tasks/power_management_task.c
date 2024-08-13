@@ -54,9 +54,7 @@ static double automatic_fan_speed(float chip_temp, GlobalState * GLOBAL_STATE)
 
     
 
-    if (chip_temp < min_temp) {
-        fan_speed_result = min_fan_speed;
-    } else if (chip_temp >= THROTTLE_TEMP) {
+    if (chip_temp >= THROTTLE_TEMP) {
         fan_speed_result = 100;
     } else {
         if(control_setpoint) {
@@ -69,9 +67,13 @@ static double automatic_fan_speed(float chip_temp, GlobalState * GLOBAL_STATE)
             }
             fan_speed_last_temp = chip_temp;
         } else {
-            double temp_range = THROTTLE_TEMP - min_temp;
-            double fan_range = 100 - min_fan_speed;
-            fan_speed_result = ((chip_temp - min_temp) / temp_range) * fan_range + min_fan_speed;
+            if (chip_temp < min_temp) {
+                fan_speed_result = min_fan_speed;
+            } else {
+                double temp_range = THROTTLE_TEMP - min_temp;
+                double fan_range = 100 - min_fan_speed;
+                fan_speed_result = ((chip_temp - min_temp) / temp_range) * fan_range + min_fan_speed;
+            }
         }
     }
 
