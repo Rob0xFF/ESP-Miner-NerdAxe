@@ -1,54 +1,23 @@
 [![](https://dcbadge.vercel.app/api/server/3E8ca2dkcC)](https://discord.gg/3E8ca2dkcC)
 
-# ESP-Miner-Nerdaxe version
+# ESP-Miner
 
-| Supported Targets | ESP32-S3              |
-| ----------------- | --------------------- |
-| Old Platform      | ~~ESP-IDF v4.4.6~~        |
-| ----------------- | --------------------- |
-| Required Platform | ESP-IDF v5.2.X        | Update!
+| Supported Targets | ESP32-S3 (BitAxe v2+) |
 | ----------------- | --------------------- |
 
-This is a forked version of ESP-miner, the original firmware of Bitaxe project developed by @skot/ESP-Miner, @ben and @jhonny.
-The current fork supports LVGL library with an UI that works with 8bit parallel screen over `TTGO-TdiplayS3` board.
+## Requires Python3.4 or later and pip
 
-~~This features unfortunatelly can't be added to the original project because requires specific ESP-IDF version to be built.~~
-
-Now firmware is up to date with current ESP-miner, so this firmware adds a Display layer
-
-
-## How to flash/update firmware
-
-#### Online Flashtool [Recommended]
-
-Easyiest way to flash firmware. Build your own miner using the folowing firwmare flash tool:
-
-1. Get a TTGO T-display S3 
-1. Get a NerdAxe board
-1. Go to flasher online tool: https://flasher.bitronics.store/ (recommend via Google Chrome incognito mode)
-
-#### Bitaxetool
-
-The bitaxetool includes all necessary library for flashing the binary file to the Bitaxe Hardware.
-
-The bitaxetool requires a config.cvs preloaded file and the appropiate firmware.bin file in it's executed directory.
-
-3. Flash with the bitaxetool
+Install bitaxetool from pip. pip is included with Python 3.4 but if you need to install it check <https://pip.pypa.io/en/stable/installation/>
 
 ```
-bitaxetool --config ./config.cvs --firmware ./esp-miner-factory-nerd101-v2.1.4.bin
+pip install --upgrade bitaxetool
 ```
 
-## How to build firmware
+## Hardware Required
 
-You might use Visual Studio Code to build the firmware for NerdAxe. Within Visual Studio Code install ESP-IDF 5.2.x. At the moment you must configure lvgl graphics library using the SDK Configuration Editor to let the project build without any glitches:
+This firmware is designed to run on a BitAxe v2+
 
-- check "Swap the 2 bytes of RGB565 color. Useful if the display has an 8-bit interface (e.g. SPI)."
-- check "Enable Montserrat 10"
-- check "Enable subpixel rendering."
-- check "Use BGR instead RGB for sub-pixel rendering."
-
-Other settings might be left as default. 
+If you do have a Bitaxe with no USB connectivity make sure to establish a serial connection with either a JTAG ESP-Prog device or a USB-to-UART bridge
 
 ## Preconfiguration
 
@@ -61,7 +30,19 @@ Starting with v2.0.0, the ESP-Miner firmware requires some basic manufacturing d
 
 The following are recommendations but it is necessary that you do have all values in your `config.cvs`file to flash properly.
 
-- recommended values for the NerdAxe 1366 (ultra)
+- recommended values for the Bitaxe 1368 (supra)
+
+  ```
+  key,type,encoding,value
+  main,namespace,,
+  asicfrequency,data,u16,490
+  asicvoltage,data,u16,1200
+  asicmodel,data,string,BM1368
+  devicemodel,data,string,supra
+  boardversion,data,string,4.0
+  ```
+
+- recommended values for the Bitaxe 1366 (ultra)
 
   ```
   key,type,encoding,value
@@ -70,37 +51,29 @@ The following are recommendations but it is necessary that you do have all value
   asicvoltage,data,u16,1200
   asicmodel,data,string,BM1366
   devicemodel,data,string,ultra
-  boardversion,data,string,101
+  boardversion,data,string,0.11
   ```
 
-## API
-Nerdaxe uses same bitaxe API funcitons.
+- recomended values for the Bitaxe 1397 (MAX)
 
-For more details take a look at `main/http_server/http_server.c`.
+  ```
+  key,type,encoding,value
+  main,namespace,,
+  asicfrequency,data,u16,475
+  asicvoltage,data,u16,1400
+  asicmodel,data,string,BM1397
+  devicemodel,data,string,max
+  boardversion,data,string,2.2
+  ```
 
-Things that can be done are:
-  
-  - Get System Info
-  - Get Swarm Info
-  - Update Swarm
-  - Swarm Options
-  - System Restart Action
-  - Update System Settings Action
-  - System Options
-  - Update OTA Firmware
-  - Update OTA WWW
-  - WebSocket
+## Flash
 
-Some API examples in curl:
-  ```bash
-  # Get system information
-  curl http://YOUR-BITAXE-IP/api/system/info
-  ```
-  ```bash
-  # Get swarm information
-  curl http://YOUR-BITAXE-IP/api/swarm/info
-  ```
-  ```bash
-  # System restart action
-  curl -X POST http://YOUR-BITAXE-IP/api/system/restart
-  ```
+The bitaxetool includes all necessary library for flashing the binary file to the Bitaxe Hardware.
+
+The bitaxetool requires a config.cvs preloaded file and the appropiate firmware.bin file in it's executed directory.
+
+3. Flash with the bitaxetool
+
+```
+bitaxetool --config ./config.cvs --firmware ./esp-miner-factory-v2.0.3.bin
+```
