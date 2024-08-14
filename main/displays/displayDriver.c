@@ -470,7 +470,7 @@ void display_updateTime(SystemModule * module){
     char strData[20];
     // Calculate the uptime in seconds                     
     //int64_t currentTimeTest = esp_timer_get_time() + (8 * 3600 * 1000000LL) + (1800 * 1000000LL);//(8 * 60 * 60 * 10000);
-    double uptime_in_seconds = (esp_timer_get_time() - module->start_time) / 1000000;
+    double uptime_in_seconds = (esp_timer_get_time()- module->start_time) / 1000000;
     int uptime_in_days = uptime_in_seconds / (3600 * 24);
     int remaining_seconds = (int) uptime_in_seconds % (3600 * 24);
     int uptime_in_hours = remaining_seconds / 3600;
