@@ -10,6 +10,7 @@
 #include "soc/uart_struct.h"
 
 #include "bm1397.h"
+#include "bm1368.h"
 #include "serial.h"
 #include "utils.h"
 
@@ -52,7 +53,7 @@ int SERIAL_send(uint8_t *data, int len, bool debug)
 {
     if (debug)
     {
-        printf("->");
+        printf("tx: ");
         prettyHex((unsigned char *)data, len);
         printf("\n");
     }
@@ -67,11 +68,17 @@ int SERIAL_send(uint8_t *data, int len, bool debug)
 int16_t SERIAL_rx(uint8_t *buf, uint16_t size, uint16_t timeout_ms)
 {
     int16_t bytes_read = uart_read_bytes(UART_NUM_1, buf, size, timeout_ms / portTICK_PERIOD_MS);
+
+    #if BM1937_SERIALRX_DEBUG || BM1366_SERIALRX_DEBUG || BM1368_SERIALRX_DEBUG
+    size_t buff_len = 0;
     if (bytes_read > 0) {
+        uart_get_buffered_data_len(UART_NUM_1, &buff_len);
         printf("rx: ");
         prettyHex((unsigned char*) buf, bytes_read);
-        printf("\n");
+        printf(" [%d]\n", buff_len);
     }
+    #endif
+
     return bytes_read;
 }
 
