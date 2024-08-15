@@ -494,13 +494,19 @@ void display_updateTime(SystemModule * module){
             display_turn_off();
         }
     } else if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && !DisplayIsOn) {
-        DisplayToggledByButton = false;
+        if(DisplayToggledByButton) {
+            DisplayToggledByButton = false;
+            display_turn_on();
+        }
     } else if ((atoi(strftime_buf) <= 21 && atoi(strftime_buf) >= 16) && !DisplayIsOn) {
         if(!DisplayToggledByButton) {
             display_turn_on();
         }
     } else if ((atoi(strftime_buf) <= 21 && atoi(strftime_buf) >= 16) && DisplayIsOn) {
-        DisplayToggledByButton = false;
+        if(DisplayToggledByButton) {
+            DisplayToggledByButton = false;
+            display_turn_off();
+        }
     } 
 
     char strData[20];
