@@ -28,6 +28,7 @@ static bool Button1Pressed_Flag = false;
 static bool Button2Pressed_Flag = false;
 static int64_t last_keypress_time = 0;
 static bool DisplayIsOn = true;
+static bool DisplayToggledByButton = false;
 static int screenStatus = STATE_ONINIT;
 static int NextScreen = 0;
 char portalWifiName[30];
@@ -202,7 +203,9 @@ static void lvglTimerTask(void* param)
             if(Button1Pressed_Flag) {
                 Button1Pressed_Flag = false;
                 last_keypress_time = esp_timer_get_time();
-                if(!DisplayIsOn) display_turn_on();
+                if(!DisplayIsOn) {
+                    display_turn_on();
+                }
                 changeScreen();
             }
             vTaskDelay(200 / portTICK_PERIOD_MS); // Delay waiting animation trigger
@@ -210,8 +213,33 @@ static void lvglTimerTask(void* param)
         if(Button2Pressed_Flag) {
             Button2Pressed_Flag = false;
             last_keypress_time = esp_timer_get_time();
-            if(DisplayIsOn) display_turn_off();
-            else display_turn_on();
+
+            time_t now;
+            struct tm timeinfo;
+            time(&now);
+            // Set timezone
+            setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
+            tzset();
+
+            localtime_r(&now, &timeinfo);
+            char strftime_buf[3];
+            strftime(strftime_buf, sizeof(strftime_buf), "%H", &timeinfo);
+            if((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && DisplayIsOn) {
+                DisplayToggledByButton = false;
+                display_turn_off();
+            }
+            else if((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && !DisplayIsOn){
+                DisplayToggledByButton = true;
+                display_turn_on();
+            }
+            else if((atoi(strftime_buf) <= 21 || atoi(strftime_buf) >= 16) && !DisplayIsOn){
+                DisplayToggledByButton = false;
+                display_turn_on();
+            }
+            else if((atoi(strftime_buf) <= 21 || atoi(strftime_buf) >= 16) && DisplayIsOn){
+                DisplayToggledByButton = true;
+                display_turn_off();
+            }
         }
         
         //Check if screen need to be turned off
@@ -462,10 +490,18 @@ void display_updateTime(SystemModule * module){
     strftime(strftime_buf, sizeof(strftime_buf), "%H", &timeinfo);
     //ESP_LOGI(TAG, "The current date/time in Berlin is: %s", strftime_buf);
     if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && DisplayIsOn) {
-        display_turn_off();
+        if(!DisplayToggledByButton) {
+            display_turn_off();
+        }
+    } else if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && !DisplayIsOn) {
+        DisplayToggledByButton = false;
     } else if ((atoi(strftime_buf) <= 21 && atoi(strftime_buf) >= 16) && !DisplayIsOn) {
-        display_turn_on();
-    }
+        if(!DisplayToggledByButton) {
+            display_turn_on();
+        }
+    } else if ((atoi(strftime_buf) <= 21 && atoi(strftime_buf) >= 16) && DisplayIsOn) {
+        DisplayToggledByButton = false;
+    } 
 
     char strData[20];
     // Calculate the uptime in seconds                     
