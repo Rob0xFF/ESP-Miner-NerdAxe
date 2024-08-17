@@ -659,16 +659,14 @@ void SYSTEM_notify_new_ntime(GlobalState * GLOBAL_STATE, uint32_t ntime)
 {
     SystemModule * module = &GLOBAL_STATE->SYSTEM_MODULE;
 
-    // Hourly clock sync
-    if (module->lastClockSync + (60 * 60) > ntime) {
-        return;
-    }
-    ESP_LOGI(TAG, "Syncing clock");
-    module->lastClockSync = ntime;
-    struct timeval tv;
-    tv.tv_sec = ntime;
-    tv.tv_usec = 0;
-    settimeofday(&tv, NULL);
+    if (module->lastClockSync == 0 || module->lastClockSync + (60 * 60) < ntime) {// system was restarted with default value or update hourly
+        ESP_LOGI(TAG, "Syncing clock");
+        module->lastClockSync = ntime;
+        struct timeval tv;
+        tv.tv_sec = ntime;
+        tv.tv_usec = 0;
+        settimeofday(&tv, NULL);
+    } 
 }
 
 void SYSTEM_notify_found_nonce(GlobalState * GLOBAL_STATE, double found_diff, uint8_t job_id)
