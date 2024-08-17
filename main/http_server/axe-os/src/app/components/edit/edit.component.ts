@@ -135,6 +135,12 @@ export class EditComponent implements OnInit {
           wifiPass: ['password'],
           coreVoltage: [info.coreVoltage, [Validators.required]],
           frequency: [info.frequency, [Validators.required]],
+          timezone: [info.timezone, [
+            Validators.required],
+            Validators.min(-12),
+            Validators.max(12)
+          ],
+          isDST: [info.isDST == 1, [Validators.required]],
           autofanspeed: [info.autofanspeed == 1, [Validators.required]],
           autofanSetpoint: [info.autofanSetpoint == 1, [Validators.required]],
           tempSetpoint: [info.tempSetpoint, [

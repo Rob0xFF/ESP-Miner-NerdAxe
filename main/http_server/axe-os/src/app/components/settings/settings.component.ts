@@ -74,6 +74,12 @@ export class SettingsComponent {
           stratumPassword: ['password', [Validators.required]],
           ssid: [info.ssid, [Validators.required]],
           wifiPass: ['password'],
+          timezone: [info.timezone, [
+            Validators.required],
+            Validators.min(-12),
+            Validators.max(12)
+          ],
+          isDST: [info.isDST == 1, [Validators.required]],
           coreVoltage: [info.coreVoltage, [Validators.required]],
           frequency: [info.frequency, [Validators.required]],
           autofanspeed: [info.autofanspeed == 1, [Validators.required]],

@@ -18,6 +18,8 @@
 #define NVS_CONFIG_DEVICE_MODEL "devicemodel"
 #define NVS_CONFIG_BOARD_VERSION "boardversion"
 #define NVS_CONFIG_FLIP_SCREEN "flipscreen"
+#define NVS_CONFIG_TIMEZONE "timezone"
+#define NVS_CONFIG_DST "isDST"
 #define NVS_CONFIG_INVERT_SCREEN "invertscreen"
 #define NVS_CONFIG_INVERT_FAN_POLARITY "invertfanpol"
 #define NVS_CONFIG_AUTO_FAN_SPEED "autofanspeed"

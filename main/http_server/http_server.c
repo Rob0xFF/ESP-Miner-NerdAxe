@@ -296,6 +296,12 @@ static esp_err_t PATCH_update_settings(httpd_req_t * req)
     if ((item = cJSON_GetObjectItem(root, "flipscreen")) != NULL) {
         nvs_config_set_u16(NVS_CONFIG_FLIP_SCREEN, item->valueint);
     }
+    if ((item = cJSON_GetObjectItem(root, "timezone")) != NULL) {
+        nvs_config_set_u16(NVS_CONFIG_TIMEZONE, item->valueint);
+    }
+    if ((item = cJSON_GetObjectItem(root, "isDST")) != NULL) {
+        nvs_config_set_u16(NVS_CONFIG_DST, item->valueint);
+    }
     if ((item = cJSON_GetObjectItem(root, "invertscreen")) != NULL) {
         nvs_config_set_u16(NVS_CONFIG_INVERT_SCREEN, item->valueint);
     }
@@ -420,6 +426,9 @@ static esp_err_t GET_system_info(httpd_req_t * req)
     cJSON_AddStringToObject(root, "version", esp_ota_get_app_description()->version);
     cJSON_AddStringToObject(root, "boardVersion", board_version);
     cJSON_AddStringToObject(root, "runningPartition", esp_ota_get_running_partition()->label);
+
+    cJSON_AddNumberToObject(root, "timezone", nvs_config_get_u16(NVS_CONFIG_TIMEZONE, 2));
+    cJSON_AddNumberToObject(root, "isDST", nvs_config_get_u16(NVS_CONFIG_DST, 1));
 
     cJSON_AddNumberToObject(root, "flipscreen", nvs_config_get_u16(NVS_CONFIG_FLIP_SCREEN, 1));
     cJSON_AddNumberToObject(root, "invertscreen", nvs_config_get_u16(NVS_CONFIG_INVERT_SCREEN, 0));

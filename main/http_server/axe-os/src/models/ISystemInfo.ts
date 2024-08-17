@@ -33,6 +33,8 @@ export interface ISystemInfo {
     invertfanpolarity: number,
     autofanspeed: number,
     autofanSetpoint: number,
+    timezone: number;
+    isDST: number;
     tempSetpoint: number,
     fanspeed: number,
     fanrpm: number,

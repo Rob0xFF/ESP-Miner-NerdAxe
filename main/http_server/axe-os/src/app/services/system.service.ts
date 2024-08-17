@@ -50,6 +50,8 @@ export class SystemService {
           boardVersion: "204",
           flipscreen: 1,
           invertscreen: 0,
+          timezone: 2,
+          isDST: 1,
           invertfanpolarity: 1,
           autofanspeed: 1,
           autofanSetpoint: 0,
