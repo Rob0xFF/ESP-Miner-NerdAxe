@@ -488,7 +488,7 @@ void display_updateTime(SystemModule * module){
     localtime_r(&now, &timeinfo);
     char strftime_buf[3];
     strftime(strftime_buf, sizeof(strftime_buf), "%H", &timeinfo);
-    //ESP_LOGI(TAG, "The current date/time in Berlin is: %s", strftime_buf);
+
     if ((atoi(strftime_buf) > 21 || atoi(strftime_buf) < 16) && DisplayIsOn) {
         if(!DisplayToggledByButton) {
             display_turn_off();
@@ -508,6 +508,10 @@ void display_updateTime(SystemModule * module){
             display_turn_off();
         }
     } 
+
+    char timeData[9];
+    strftime(timeData, sizeof(timeData), "%H:%M.%S", &timeinfo);
+    lv_label_set_text(ui_lbTimeOfDay, timeData); // Update label
 
     char strData[20];
     // Calculate the uptime in seconds                     

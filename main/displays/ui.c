@@ -24,6 +24,7 @@ lv_obj_t * ui_lbPower;
 lv_obj_t * ui_lbEficiency;
 lv_obj_t * ui_lbTemp;
 lv_obj_t * ui_lbTime;
+lv_obj_t * ui_lbTimeOfDay;
 lv_obj_t * ui_lbIP;
 lv_obj_t * ui_lbBestDifficulty;
 lv_obj_t * ui_lbBestDifficultySet;
@@ -240,6 +241,18 @@ void ui_MiningScreen_screen_init(void)
     lv_obj_set_style_text_opa(ui_lbTime, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_lbTime, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_lbTime, &ui_font_OpenSansBold13, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_lbTimeOfDay = lv_label_create(ui_MiningScreen);
+    lv_obj_set_width(ui_lbTimeOfDay, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_lbTimeOfDay, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_lbTimeOfDay, -110);
+    lv_obj_set_y(ui_lbTimeOfDay, -74);
+    lv_obj_set_align(ui_lbTimeOfDay, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_lbTimeOfDay, "00:00.00");
+    lv_obj_set_style_text_color(ui_lbTimeOfDay, lv_color_hex(0xDEDEDE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_lbTimeOfDay, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_lbTimeOfDay, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_lbTimeOfDay, &ui_font_OpenSansBold13, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_lbIP = lv_label_create(ui_MiningScreen);
     lv_obj_set_width(ui_lbIP, LV_SIZE_CONTENT);   /// 1

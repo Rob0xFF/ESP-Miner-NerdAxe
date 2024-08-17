@@ -24,6 +24,7 @@ extern lv_obj_t * ui_lbPower;
 extern lv_obj_t * ui_lbEficiency;
 extern lv_obj_t * ui_lbTemp;
 extern lv_obj_t * ui_lbTime;
+extern lv_obj_t * ui_lbTimeOfDay;
 extern lv_obj_t * ui_lbIP;
 extern lv_obj_t * ui_lbBestDifficulty;
 extern lv_obj_t * ui_lbBestDifficultySet;
