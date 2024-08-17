@@ -249,7 +249,7 @@ void ui_MiningScreen_screen_init(void)
     lv_obj_set_y(ui_lbTimeOfDay, -74);
     lv_obj_set_align(ui_lbTimeOfDay, LV_ALIGN_CENTER);
     lv_label_set_text(ui_lbTimeOfDay, "00:00.00");
-    lv_obj_set_style_text_color(ui_lbTimeOfDay, lv_color_hex(0xDEDEDE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_lbTimeOfDay, lv_color_hex(0xDEDADE), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_lbTimeOfDay, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_lbTimeOfDay, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_lbTimeOfDay, &ui_font_OpenSansBold13, LV_PART_MAIN | LV_STATE_DEFAULT);

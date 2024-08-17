@@ -203,10 +203,9 @@ static void lvglTimerTask(void* param)
             if(Button1Pressed_Flag) {
                 Button1Pressed_Flag = false;
                 last_keypress_time = esp_timer_get_time();
-                if(!DisplayIsOn) {
-                    display_turn_on();
+                if(DisplayIsOn) {
+                    changeScreen();
                 }
-                changeScreen();
             }
             vTaskDelay(200 / portTICK_PERIOD_MS); // Delay waiting animation trigger
         }
@@ -471,6 +470,10 @@ void display_updateShares(SystemModule * module){
     snprintf(strData, sizeof(strData), "%lld/%lld", module->shares_accepted, module->shares_rejected);
     lv_label_set_text(ui_lbShares, strData); // Update shares
 
+    // if(module->shares_accepted > 2) {
+    //     module->FOUND_BLOCK = true;
+    // }
+
     snprintf(strData, sizeof(strData), "%s", module->best_diff_string);
     lv_label_set_text(ui_lbBestDifficulty, module->best_diff_string); // Update Bestdifficulty
     lv_label_set_text(ui_lbBestDifficultySet, module->best_diff_string); // Update Bestdifficulty
@@ -564,6 +567,28 @@ void display_updateBTCprice(void){
     lv_label_set_text(ui_lblBTCPrice, price_str); // Update label
 }
 
+lv_obj_t * blockfound_box;
+
+void display_updateBlockFound(SystemModule * module) {
+    if(module->FOUND_BLOCK) {
+        display_turn_on();
+        if (blockfound_box == NULL) {
+            lv_obj_t *current_screen = lv_scr_act();
+            lv_obj_t *green_box = lv_obj_create(current_screen);
+            lv_obj_set_size(green_box, 330, 180);
+            lv_obj_set_style_bg_color(green_box, lv_color_hex(0x000000), LV_PART_MAIN);
+            lv_obj_set_style_border_width(green_box, 0, LV_PART_MAIN);
+            lv_obj_align(green_box, LV_ALIGN_CENTER, 0, 0);
+
+            blockfound_box = lv_label_create(green_box);
+            lv_label_set_text(blockfound_box, "FOUND BLOCK.");
+            lv_obj_set_style_text_color(blockfound_box, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+            lv_obj_center(blockfound_box);
+            lv_obj_set_style_text_font(blockfound_box, &ui_font_OpenSansBold24, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+    }
+}
+
 void display_updateGlobalState(GlobalState * GLOBAL_STATE){
     char strData[20];
 
@@ -594,6 +619,7 @@ void display_updateGlobalState(GlobalState * GLOBAL_STATE){
     display_updateShares(module);
     display_updateHashrate(module, GLOBAL_STATE->POWER_MANAGEMENT_MODULE.power);
     display_updateBTCprice();
+    display_updateBlockFound(module);
 
     uint16_t vcore = ADC_get_vcore();
     snprintf(strData, sizeof(strData), "%umV", vcore);
