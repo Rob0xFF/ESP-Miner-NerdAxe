@@ -659,7 +659,7 @@ void SYSTEM_notify_new_ntime(GlobalState * GLOBAL_STATE, uint32_t ntime)
 {
     SystemModule * module = &GLOBAL_STATE->SYSTEM_MODULE;
 
-    if (module->lastClockSync == 0 || module->lastClockSync + (60 * 60) < ntime) {// system was restarted with default value or update hourly
+    if (module->lastClockSync + (60 * 60) < ntime) {// update hourly
         ESP_LOGI(TAG, "Syncing clock");
         module->lastClockSync = ntime;
         struct timeval tv;
