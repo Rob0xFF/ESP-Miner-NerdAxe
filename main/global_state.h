@@ -62,6 +62,8 @@ typedef struct
     char best_session_diff_string[DIFF_STRING_SIZE];
     bool FOUND_BLOCK;
     bool startup_done;
+    uint8_t used_nvs_percent;
+    char * reset_reason;
     char ssid[32];
     char wifi_status[20];
     char * pool_url;

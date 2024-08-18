@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <sys/param.h>
+#include "displayDriver.h"
 
 #include "dns_server.h"
 #include "esp_mac.h"
@@ -384,6 +385,10 @@ static esp_err_t GET_system_info(httpd_req_t * req)
     cJSON_AddStringToObject(root, "bestSessionDiff", GLOBAL_STATE->SYSTEM_MODULE.best_session_diff_string);
 
     cJSON_AddNumberToObject(root, "freeHeap", esp_get_free_heap_size());
+    cJSON_AddNumberToObject(root, "usedNVS", GLOBAL_STATE->SYSTEM_MODULE.used_nvs_percent);
+    cJSON_AddStringToObject(root, "resetReason", GLOBAL_STATE->SYSTEM_MODULE.reset_reason);
+    cJSON_AddNumberToObject(root, "nerdDisplayStatus", isDisplayOn());
+    cJSON_AddNumberToObject(root, "hasFoundBlock", GLOBAL_STATE->SYSTEM_MODULE.FOUND_BLOCK ? 1 : 0);
     cJSON_AddNumberToObject(root, "coreVoltage", nvs_config_get_u16(NVS_CONFIG_ASIC_VOLTAGE, CONFIG_ASIC_VOLTAGE));
     cJSON_AddNumberToObject(root, "coreVoltageActual", VCORE_get_voltage_mv(GLOBAL_STATE));
     cJSON_AddNumberToObject(root, "frequency", nvs_config_get_u16(NVS_CONFIG_ASIC_FREQ, CONFIG_ASIC_FREQUENCY));

@@ -11,4 +11,6 @@ void SYSTEM_notify_found_nonce(GlobalState * GLOBAL_STATE, double found_diff, ui
 void SYSTEM_notify_mining_started(GlobalState * GLOBAL_STATE);
 void SYSTEM_notify_new_ntime(GlobalState * GLOBAL_STATE, uint32_t ntime);
 
+void showLastResetReason(GlobalState * GLOBAL_STATE);
+
 #endif /* SYSTEM_H_ */

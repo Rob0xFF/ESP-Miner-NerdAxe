@@ -4,28 +4,40 @@
             <h5>Overview</h5>
             <table *ngIf="info$ | async as info">
                 <tr>
-                    <td>Model:</td>
+                  <td>Board Version:</td>
+                  <td>{{info.boardVersion}}</td>
+                </tr>
+                <tr>
+                    <td>ASIC Model:</td>
                     <td>{{info.ASICModel}}</td>
+                </tr>
+                <tr>
+                  <td>Software Version:</td>
+                  <td>{{info.version}}</td>
+                </tr>
+                <tr>
+                  <td>WiFi Status:</td>
+                  <td>{{info.wifiStatus}}</td>
+                </tr>
+                <tr>
+                  <td>NerdDisplay Status:</td>
+                  <td>{{info.nerdDisplayStatus && 'On' || 'Off'}}</td>
                 </tr>
                 <tr>
                     <td>Uptime:</td>
                     <td>{{info.uptimeSeconds | dateAgo}}</td>
                 </tr>
                 <tr>
-                    <td>WiFi Status:</td>
-                    <td>{{info.wifiStatus}}</td>
+                  <td>Latest Reset Reason:</td>
+                  <td>{{info.resetReason}}</td>
                 </tr>
                 <tr>
                     <td>Free Heap Memory:</td>
-                    <td>{{info.freeHeap}}</td>
+                    <td>{{info.freeHeap}} Byte</td>
                 </tr>
                 <tr>
-                    <td>Version:</td>
-                    <td>{{info.version}}</td>
-                </tr>
-                <tr>
-                    <td>Board Version:</td>
-                    <td>{{info.boardVersion}}</td>
+                  <td>Used NVStorage:</td>
+                  <td>{{info.usedNVS}} %</td>
                 </tr>
             </table>
         </div>

@@ -79,8 +79,7 @@ void display_log_message(const char *message);
 void display_MiningScreen(void);
 void display_PortalScreen(const char *message);
 void display_UpdateWifiStatus(const char *message);
-
-
+uint8_t isDisplayOn(void);
 
 #endif /* DISPLAYDRIVER_H_ */
 

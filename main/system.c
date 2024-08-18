@@ -502,7 +502,9 @@ static void _suffix_string(uint64_t val, char * buf, size_t bufsiz, int sigdigit
     }
 }
 
-void showLastResetReason() {
+void showLastResetReason(GlobalState * GLOBAL_STATE) {
+
+    SystemModule * module = &GLOBAL_STATE->SYSTEM_MODULE;
     // Obtener la razón del último reinicio
     esp_reset_reason_t reason = esp_reset_reason();
 
@@ -522,7 +524,7 @@ void showLastResetReason() {
         case ESP_RST_SDIO:       reason_str = "SDIO reset"; break;
         default:                 reason_str = "Not specified"; break;
     }
-
+    module->reset_reason = reason_str;
     // Imprimir la razón del reinicio en el log
     ESP_LOGI(TAG, "Reset reason: %s", reason_str);
 }

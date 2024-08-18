@@ -25,7 +25,25 @@ static const double NONCE_SPACE = 4294967296.0; //  2^32
 void app_main(void)
 {
     ESP_LOGI(TAG, "Welcome to the bitaxe - hack the planet!");
+
+    ESP_LOGI(TAG, "Intitializing non volatile storage (NVS).");
     ESP_ERROR_CHECK(nvs_flash_init());
+
+    nvs_stats_t nvs_stats;
+    esp_err_t err = nvs_get_stats(NULL, &nvs_stats);  // NULL means default NVS partition
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "NVS: Total Entries = %d, Used Entries = %d, Free Entries = %d, Namespace Count = %d",
+           nvs_stats.total_entries,
+           nvs_stats.used_entries,
+           nvs_stats.free_entries,
+           nvs_stats.namespace_count);
+    } else {
+        ESP_LOGI(TAG, "Error (%s) reading NVS stats!", esp_err_to_name(err));
+    }
+
+    GLOBAL_STATE.SYSTEM_MODULE.used_nvs_percent = (uint8_t) (100 * nvs_stats.used_entries / nvs_stats.total_entries);
+
+    showLastResetReason(&GLOBAL_STATE);
 
     GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value = nvs_config_get_u16(NVS_CONFIG_ASIC_FREQ, CONFIG_ASIC_FREQUENCY);
     ESP_LOGI(TAG, "NVS_CONFIG_ASIC_FREQ %f", (float)GLOBAL_STATE.POWER_MANAGEMENT_MODULE.frequency_value);
