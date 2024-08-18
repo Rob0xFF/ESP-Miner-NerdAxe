@@ -477,7 +477,7 @@ void display_updateShares(SystemModule * module){
     snprintf(strData, sizeof(strData), "%lld/%lld", module->shares_accepted, module->shares_rejected);
     lv_label_set_text(ui_lbShares, strData); // Update shares
 
-    // if(module->shares_accepted > 2) {
+    // if(module->shares_accepted > 2) { // Test the found block functionality
     //     module->FOUND_BLOCK = true;
     // }
 
@@ -589,7 +589,7 @@ void display_updateBlockFound(SystemModule * module) {
 
             blockfound_box = lv_label_create(green_box);
             lv_label_set_text(blockfound_box, "FOUND BLOCK.");
-            lv_obj_set_style_text_color(blockfound_box, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+            lv_obj_set_style_text_color(blockfound_box, lv_color_hex(0x00DEFF), LV_PART_MAIN);
             lv_obj_center(blockfound_box);
             lv_obj_set_style_text_font(blockfound_box, &ui_font_OpenSansBold24, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
