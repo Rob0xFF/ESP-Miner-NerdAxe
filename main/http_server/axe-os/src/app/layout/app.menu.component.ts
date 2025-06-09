@@ -39,7 +39,7 @@ export class AppMenuComponent implements OnInit {
         this.systemService.restart().subscribe(res => {
 
         });
-        this.toastr.success('Success!', 'Bitaxe restarted');
+        this.toastr.success('Success!', 'NerdAxe restarted');
     }
 
 }

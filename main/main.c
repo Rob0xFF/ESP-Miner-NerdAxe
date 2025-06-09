@@ -19,12 +19,12 @@
 
 static GlobalState GLOBAL_STATE = {.extranonce_str = NULL, .extranonce_2_len = 0, .abandon_work = 0, .version_mask = 0};
 
-static const char * TAG = "bitaxe";
+static const char * TAG = "nerdaxe";
 static const double NONCE_SPACE = 4294967296.0; //  2^32
 
 void app_main(void)
 {
-    ESP_LOGI(TAG, "Welcome to the bitaxe - hack the planet!");
+    ESP_LOGI(TAG, "Welcome to the NerdAxe - hack the planet!");
 
     ESP_LOGI(TAG, "Intitializing non volatile storage (NVS).");
     ESP_ERROR_CHECK(nvs_flash_init());

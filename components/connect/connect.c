@@ -95,7 +95,7 @@ esp_netif_t * wifi_init_softap(void)
     esp_netif_t * esp_netif_ap = esp_netif_create_default_wifi_ap();
 
     // Define a buffer for the SSID
-    char ssid_with_mac[13]; // "Bitaxe" + 4 bytes from MAC address
+    char ssid_with_mac[13]; // "Nerdaxe" + 4 bytes from MAC address
 
     // Generate the SSID
     generate_ssid(ssid_with_mac);

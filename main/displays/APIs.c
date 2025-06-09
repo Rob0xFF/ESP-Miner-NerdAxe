@@ -35,31 +35,47 @@ esp_err_t http_event_handler(esp_http_client_event_t *evt) {
                 response_buffer[response_length] = '\0';  // Asegurarse de que el buffer es una cadena válida
             }
             break;
-        case HTTP_EVENT_ON_FINISH:
+        // case HTTP_EVENT_ON_FINISH:
             // Intentar parsear el JSON completo al final de la transmisión
             //ESP_LOGI(tag, "Final JSON received: %s", response_buffer);
-            cJSON *json = cJSON_Parse(response_buffer);
-            if (json != NULL) {
-                cJSON *bpi = cJSON_GetObjectItem(json, "bpi");
-                if (bpi != NULL) {
-                    cJSON *usd = cJSON_GetObjectItem(bpi, "USD");
-                    if (usd != NULL) {
-                        cJSON *rate_float = cJSON_GetObjectItem(usd, "rate_float");
-                        if (cJSON_IsNumber(rate_float)) {
-                            bitcoin_price = (int) rate_float->valuedouble;  
-                            ESP_LOGI(tag, "Bitcoin price in USD: %d", bitcoin_price);
-                        }
+            // cJSON *json = cJSON_Parse(response_buffer);
+            // if (json != NULL) {
+            //     cJSON *bpi = cJSON_GetObjectItem(json, "bpi");
+            //     if (bpi != NULL) {
+            //         cJSON *usd = cJSON_GetObjectItem(bpi, "USD");
+            //         if (usd != NULL) {
+            //             cJSON *rate_float = cJSON_GetObjectItem(usd, "rate_float");
+            //             if (cJSON_IsNumber(rate_float)) {
+            //                 bitcoin_price = (int) rate_float->valuedouble;  
+            //                 ESP_LOGI(tag, "Bitcoin price in USD: %d", bitcoin_price);
+            //             }
+            //         }
+            //     }
+            //     cJSON_Delete(json);  
+            // } else {
+            //     ESP_LOGE(tag, "Failed to parse JSON");
+            // }
+            // // Liberar el buffer después de procesar
+            // free(response_buffer);
+            // response_buffer = NULL;
+            // response_length = 0;
+            // break;
+            case HTTP_EVENT_ON_FINISH: {
+                cJSON *json = cJSON_Parse(response_buffer);
+                if (json) {
+                    const cJSON *price = cJSON_GetObjectItemCaseSensitive(json, "price");
+                    if (cJSON_IsString(price)) {
+                        bitcoin_price = (unsigned int) atof(price->valuestring);
+                        ESP_LOGI(tag, "BTC price (Binance): %d", bitcoin_price);
                     }
+                    cJSON_Delete(json);
+                } else {
+                 ESP_LOGE(tag, "JSON parse error");
                 }
-                cJSON_Delete(json);
-            } else {
-                ESP_LOGE(tag, "Failed to parse JSON");
-            }
-            // Liberar el buffer después de procesar
-            free(response_buffer);
-            response_buffer = NULL;
-            response_length = 0;
-            break;
+                free(response_buffer);
+                response_buffer = NULL;
+                response_length = 0;
+                } break;
         default:
             break;
     }
@@ -70,10 +86,15 @@ unsigned int getBTCprice(void) {
     static char price_str[32];
 
     if ((mBTCUpdate == 0) || (esp_timer_get_time() / 1000 - mBTCUpdate > UPDATE_BTC_min * 60)) {
+        // esp_http_client_config_t config = {
+        //     .url = getBTCAPI,
+        //     .event_handler = http_event_handler,
+        // };
         esp_http_client_config_t config = {
-            .url = getBTCAPI,
-            .event_handler = http_event_handler,
-        };
+             .url = getBTCAPI,
+             .event_handler = http_event_handler
+            };
+
 
         esp_http_client_handle_t client = esp_http_client_init(&config);
         esp_err_t err = esp_http_client_perform(client);

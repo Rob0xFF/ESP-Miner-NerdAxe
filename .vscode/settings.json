@@ -23,5 +23,6 @@
         "ssid"
     ],
     "idf.port": "/dev/tty.usbmodem2401",
-    "C_Cpp.intelliSenseEngine": "Tag Parser"
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "idf.pythonInstallPath": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3"
 }

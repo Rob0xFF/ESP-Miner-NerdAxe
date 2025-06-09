@@ -33,7 +33,7 @@ export class SystemService {
           usedNVS: 10,
           coreVoltage: 1200,
           coreVoltageActual: 1200,
-          hostname: "Bitaxe",
+          hostname: "NerdAxe",
           ssid: "default",
           wifiPass: "password",
           wifiStatus: "Connected!",
